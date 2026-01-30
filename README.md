@@ -9,14 +9,14 @@
 - [x] Crear claves ssh en ordenador de casa y en ordenador de clase. Añadir claves públicas a las cuentas de github/codeberg
 - [x] Clonar repositorio en clase y en casa
 - [x] Probar a hacer cambios en clase y en casa y aprender a mantener actualizados los cambios realizados (clase/casa/repositorio)
-- [ ] Crear subcarpeta `proyecto` en repositorio.
-- [ ] Incluir en `README.md` con las instrucciones para instalar y ejecutar el proyecto.
-- [ ] Crear en `proyecto` subcarpeta `01-capas` e incluir en la misma el código para dicha fase de tu proyecto
-- [ ] Los apartados de la interfaz que aparecen en el menú principal deben funcionar correctamente.
-- [ ] El proyecto está organizado en capas.
-- [ ] La estructura de archivos y carpetas siguen las pautas de módulos, paquetes y subpaquetes vistos hasta ahora en clase.
-- [ ] Se han aplicado los principios de POO vistos en clase.
-- [ ] Los nombres de ficheros, clases y variables son significativos y siguen los principios de la recomendación PEP8.
+- [x] Crear subcarpeta `proyecto` en repositorio.
+- [x] Incluir en `README.md` con las instrucciones para instalar y ejecutar el proyecto.
+- [x] Crear en `proyecto` subcarpeta `01-capas` e incluir en la misma el código para dicha fase de tu proyecto
+- [x] Los apartados de la interfaz que aparecen en el menú principal deben funcionar correctamente.
+- [x] El proyecto está organizado en capas.
+- [x] La estructura de archivos y carpetas siguen las pautas de módulos, paquetes y subpaquetes vistos hasta ahora en clase.
+- [x] Se han aplicado los principios de POO vistos en clase.
+- [x] Los nombres de ficheros, clases y variables son significativos y siguen los principios de la recomendación PEP8.
 
 ## Aspectos a tener en cuenta durante el desarrollo del proyecto
 
