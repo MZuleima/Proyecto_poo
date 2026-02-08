@@ -1,44 +1,37 @@
+def ejecutar_sistema():
+    # 1. Cargar infraestructura
+    tecnicos = RepositorioInicial.cargar_tecnicos()
+    salas = RepositorioInicial.cargar_salas()
+    
+    # 2. Iniciar servicios de aplicación
+    servicios = ServiciosIncidencias()
 
-def nuevo_menu():
-    print("\n ---Gestor de incidencias")
-    print("1.Mostrar Incidencias")
-    print("2.Nueva Incidencia")
-    print("3.Incidencias pendientes")
-    print("4.Cancelar")
-    print("5.Salir")
+    print("=== SISTEMA DE GESTIÓN DE INCIDENCIAS CRÍTICAS ===")
+    
+    # Simulación de Flujo: Mañana a Tarde
+    t_mañana = tecnicos[0] # Juan
+    t_tarde = tecnicos[1]  # Ana
+    sala_crisis = salas[0]
+    
+    print(f"\n[TURNO] Técnico: {t_mañana.nombre} ({t_mañana.turno})")
+    
+    # El técnico de mañana encuentra una falla
+    inc = servicios.nueva_incidencia(101, t_mañana, sala_crisis, "Fallo de alimentación en UPS Sala Crisis")
+    
+    # Termina el turno sin resolverla -> Se genera Borrador Word y aviso para Ana
+    print(servicios.generar_documento(inc, tecnico_entrante=t_tarde))
 
-def opcion_mostrar(servicio):
-    pass
-
-def opcion_nueva():
-    pass
-
-def opcion_pendientes():
-    pass
-
-def opcion_cancelar():
-    pass
-
-def main():
-    while True:
-        nuevo_menu()
-        opcion = input("Elige una opción: ").strip()
-        try:
-            if opcion == "1":
-                opcion_mostrar(servicio)
-            elif opcion == "2":
-                opcion_nueva(servicio)
-            elif opcion == "3":
-                opcion_pendientes(servicio)
-            elif opcion == "4":
-                opcion_cancelar(servicio)
-            elif opcion == "5":
-                print("Fin del programa")
-                break
-            else:
-                print("Opción no valida.")
-        except ValueError as e:
-            print("Error" +  str(e))
+    # Entra el técnico de tarde
+    print(f"\n[TURNO] Técnico: {t_tarde.nombre} ({t_tarde.turno})")
+    print("Revisando notificaciones de relevo...")
+    print(f"Avisos: {t_tarde.notificaciones_pendientes[0]}")
+    
+    # Ana resuelve la incidencia
+    print("\n[ACCION] Ana está reparando la incidencia...")
+    servicios.resolver(inc, "Baterías sustituidas. Sistema operando con normalidad.")
+    
+    # Ahora se genera el PDF final
+    print(servicios.generar_documento(inc))
 
 if __name__ == "__main__":
-    main()
+    ejecutar_sistema()
