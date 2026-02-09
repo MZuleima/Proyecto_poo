@@ -1,3 +1,7 @@
+from domain.item import Tecnico
+from domain.estructura import SalaControl, RegistroIncidencia
+from infrastructure.datos_iniciales import RepositorioInicial
+from application.servicios import ServiciosIncidencias
 def ejecutar_sistema():
     #Cargar infraestructura
     tecnicos = RepositorioInicial.cargar_tecnicos()

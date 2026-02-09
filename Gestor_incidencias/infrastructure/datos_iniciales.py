@@ -1,3 +1,5 @@
+from domain.item import Tecnico
+from domain.estructura import SalaControl
 class RepositorioInicial:
     """Los datos de los 3 técnicos y las 3 salas."""
     @staticmethod
