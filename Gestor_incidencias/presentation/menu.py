@@ -6,7 +6,7 @@ def ejecutar_sistema():
     #Iniciar servicios de aplicación
     servicios = ServiciosIncidencias()
 
-    print("=== SISTEMA DE GESTIÓN DE INCIDENCIAS CRÍTICAS ===")
+    print("=== SISTEMA DE GESTIÓN DE INCIDENCIAS ===")
     
     #Simulación de Flujo: Mañana a Tarde
     t_mañana = tecnicos[0] # Juan

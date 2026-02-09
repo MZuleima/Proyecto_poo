@@ -1,4 +1,4 @@
-from domain.maquina import RegistroIncidencia
+from domain.estructura import RegistroIncidencia
 
 class ServiciosIncidencias:
     def __init__(self):
