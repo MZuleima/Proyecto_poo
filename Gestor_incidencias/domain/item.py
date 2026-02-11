@@ -23,7 +23,7 @@ class Tecnico(Trabajador):
         #Buzon de entrada -> almacena los mensajes 
         self.notificacion_pendiente = []
     
-    def registro_aviso(self, mensaje):
+    def registrar_aviso(self, mensaje):
         #Añadir un aviso con la fecha y hora actual
         fecha = datetime.now().strftime("%d/%m/%Y, %H:%M:%S")
         #Añadir a la lista el mensaje con el tiempo.

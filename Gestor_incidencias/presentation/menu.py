@@ -21,22 +21,22 @@ def ejecutar_sistema():
     print(f"\n[TURNO] Técnico: {t_mañana.nombre} ({t_mañana.turno})")
     
     #El técnico de mañana encuentra una falla
-    inc = servicios.nueva_incidencia(101, t_mañana, sala_crisis, "Fallo en  Sala Crisis")
+    obj_incidencia = servicios.nueva_incidencia(101, t_mañana, sala_crisis, "Fallo en  Sala Crisis")
     
     #Termina el turno sin resolverla -> Se genera Borrador Word y aviso para Ana
-    print(servicios.generar_documento(inc, tecnico_entrante=t_tarde))
+    print(servicios.generar_documento(obj_incidencia, tecnico_entrante=t_tarde))
 
     #Entra el técnico de tarde
     print(f"\n[TURNO] Técnico: {t_tarde.nombre} ({t_tarde.turno})")
     print("Revisando notificaciones de relevo...")
-    print(f"Avisos: {t_tarde.notificaciones_pendientes[0]}")
+    print(f"Avisos: {t_tarde.notificacion_pendiente[0]}")
     
     #Ana resuelve la incidencia
     print("\n[ACCION] Ana esta con la incidencia")
-    servicios.resolver(inc, "Problema solucionado.")
+    servicios.resolver(obj_incidencia, "Problema solucionado.")
     
     #Ahora se genera el PDF final
-    print(servicios.generar_documento(inc))
+    print(servicios.generar_documento(obj_incidencia))
 
 if __name__ == "__main__":
     ejecutar_sistema()

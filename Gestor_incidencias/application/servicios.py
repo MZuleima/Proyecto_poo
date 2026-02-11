@@ -13,11 +13,11 @@ class ServiciosIncidencias:
         incidencia.resolucion = resolucion
         incidencia.estado = "Solventada"
 
-    def generar_documento(self, incidencia, tecnico_entrante=None):
-        if incidencia.estado == "Solventada":
-            return f"PDF FINAL: Incidencia {incidencia.id_inc} resuelta en {incidencia.sala.nombre}."
+    def generar_documento(self, obj_incidencia, tecnico_entrante=None):
+        if obj_incidencia.estado == "Solventada":
+            return f"PDF FINAL: Incidencia {obj_incidencia.id_inc} resuelta en {obj_incidencia.sala.nombre}."
         else:
             if tecnico_entrante:
-                msg = f"Pendiente: {incidencia.descripcion}"
+                msg = f"Pendiente: {obj_incidencia.descripcion}"
                 tecnico_entrante.registrar_aviso(msg)
-            return f"BORRADOR: Incidencia {incidencia.id_inc} enviada a siguiente turno."
+            return f"BORRADOR: Incidencia {obj_incidencia.id_inc} enviada a siguiente turno."
