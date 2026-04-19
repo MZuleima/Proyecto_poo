@@ -35,5 +35,5 @@ class Tecnico(Trabajador):
         if not self.notificacion_pendiente:
             return "No hay avisos pendientes"
         #Si hay mensajes, los une en un texto separados por saltos de línea
-        return "/n".join(self.notificacion_pendiente)
+        return "\n".join(self.notificacion_pendiente)
     

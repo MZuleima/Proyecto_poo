@@ -1,47 +1,85 @@
-# domain/maquina.py
 from datetime import datetime
 
 class SalaControl:
-    def __init__(self, nombre_sala):
-        # Validamos que la sala sea una de las tres permitidas por el sistema
-        # (Sala de Crisis, Sala de Operadores, Sala del Datawall)
-        salas_validas = ["Crisis", "Operadores", "Datawall"]
-        if nombre_sala not in salas_validas:
-            raise ValueError(f"Error: La sala '{nombre_sala}' no está autorizada.")
-        
-        self.nombre = nombre_sala
-        self.activa = True
+    def __init__(self, nombre, ubicacion):
+        self._nombre = nombre
+        self._ubicacion = ubicacion
+
+    @property
+    def nombre(self):
+        return self._nombre
+
+    @property
+    def ubicacion(self):
+        return self._ubicacion
+
 
 class RegistroIncidencia:
     def __init__(self, id_inc, tecnico, sala, descripcion):
-        # Identificador único de la incidencia
-        self.id_inc = id_inc
-        # Objeto de la clase Tecnico (proviene de item.py)
-        self.tecnico = tecnico  
-        # Objeto de la clase SalaControl
-        self.sala = sala        
-        # Descripción detallada del problema encontrado
-        self.descripcion = descripcion
-        # Marca de tiempo de apertura automática
-        self.fecha_apertura = datetime.now()
-        # Estado inicial: Pendiente (genera borrador Word) o Solventada (genera PDF)
-        self.estado = "Pendiente"  
-        # Texto con la solución aplicada (vacío al inicio)
-        self.resolucion = ""
-        # Fecha de cierre (se asigna al solventar)
-        self.fecha_cierre = None
+        # Atributos protegidos (encapsulamiento)
+        self._id_inc = id_inc
+        self._tecnico = tecnico
+        self._sala = sala
+        self._descripcion = descripcion
 
-    def solventar(self, detalle_solucion):
+        # Valores por defecto para una incidencia nueva
+        self._estado = "Pendiente"
+        self._resolucion = ""
+        self._fecha_apertura = datetime.now()
+        self._fecha_cierre = None
+
+    # --- PROPIEDADES (Getters) ---
+    # Solo lectura para elementos que no deben cambiar tras la creación
+    @property
+    def id_inc(self):
+        return self._id_inc
+
+    @property
+    def tecnico(self):
+        return self._tecnico
+
+    @property
+    def sala(self):
+        return self._sala
+
+    @property
+    def descripcion(self):
+        return self._descripcion
+
+    @property
+    def estado(self):
+        return self._estado
+
+    @property
+    def resolucion(self):
+        return self._resolucion
+
+    @property
+    def fecha_cierre(self):
+        return self._fecha_cierre
+
+    # --- SETTERS (Control de cambios) ---
+    @estado.setter
+    def estado(self, nuevo_estado):
+        " Solo deja cambiar el estado si es uno de los permitidos. "
+        estados_permitidos = ["Pendiente", "Solventada", "Cancelada"]
+        if nuevo_estado not in estados_permitidos:
+            raise ValueError(f"Estado inválido. Debe ser uno de: {estados_permitidos}")
+        self._estado = nuevo_estado
+
+    @resolucion.setter
+    def resolucion(self, texto):
+        " No deja guardar una solución si es demasiado corta o está vacía. "
+        if not texto or len(texto.strip()) < 5:
+            raise ValueError("La resolución es demasiado corta (mínimo 5 caracteres).")
+        self._resolucion = texto
+
+    # --- Acción principal ---
+    def solventar(self, texto_resolucion):
         """
-        Cambia el estado de la incidencia a 'Solventada'. 
+        Este es el botón de 'Arreglar'. Actualiza la solución, 
+        cambia el estado y apunta la hora exacta en que se terminó.
         """
-        self.resolucion = detalle_solucion
-        self.estado = "Solventada"
-        self.fecha_cierre = datetime.now()
-
-    def es_critica(self):
-        return self.sala.nombre == "Crisis"
-
-    def obtener_resumen(self):
-        """Devuelve un resumen rápido del estado actual de la incidencia."""
-        return f"Incidencia #{self.id_inc} en {self.sala.nombre} - Estado: {self.estado}"
+        self.resolucion = texto_resolucion  # Valida mediante el setter
+        self.estado = "Solventada"         # Valida mediante el setter
+        self._fecha_cierre = datetime.now()
