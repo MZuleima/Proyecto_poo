@@ -155,7 +155,7 @@ Los errores del dominio deben capturarse en la route y devolver el mensaje con e
 
 ---
 
-## 7. Puntos de atención
+## 7. Advertencias
 
 ### 7.1. Máquina de estados de la incidencia (es decir, el estado solo puede avanzar en un orden concreto y no puede volver atrás)
 
