@@ -1,16 +1,14 @@
-# Manual de Ejecución
+# Manual de Ejecución del Sistema (Consola y Web)
 
-## Requisitos
-- Python 3.8 o superior.
+El sistema soporta un doble entorno de presentación (interfaz de línea de comandos clásica y servidor API Web mediante Flask), ambos conectados al mismo motor de persistencia relacional SQLite.
 
-## Pasos para ejecutar
-1. Navegar a la carpeta raíz del proyecto: `cd Gestor_incidencias`.
-2. Ejecutar el módulo principal: `python main.py`.
+## 1. Requisitos Previos e Instalación
 
-## Uso rápido
-- Seleccione **Opción 1** para crear una incidencia.
-- Use los índices numéricos (0, 1, 2...) para seleccionar técnicos y salas de las listas mostradas.
+Asegúrate de contar con Python 3.8 o superior. Antes de iniciar cualquiera de los entornos, es obligatorio instalar las dependencias del proyecto e inicializar el archivo de datos:
 
-## Ejecución de Pruebas Automáticas
-Si eres desarrollador y quieres verificar que el núcleo del sistema funciona correctamente, ejecuta:
-`python -m unittest tests/test_dominio.py`
+```bash
+# 1. Instalar Flask y dependencias necesarias
+pip install -r requirements.txt
+
+# 2. Inicializar la base de datos relacional (Tablas y Catálogos Semilla)
+python crear_bd.py
