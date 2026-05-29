@@ -1,66 +1,71 @@
-# Proyecto modelo. Máquina expendedora de refrescos y snacks
+# Gestor de Incidencias Técnicas v5.0.0 — API Web con Flask
 
-## Ejecución del proyecto
+Este proyecto consiste en un sistema de control crítico para la gestión y trazabilidad de incidencias en salas de control. En esta fase, el sistema evoluciona incorporando **Flask** como una nueva capa de presentación web, conviviendo de forma limpia y paralela con el menú clásico de consola.
 
-<details>
-  <summary>Fase 04 - persistencia con SQLite</summary>
+Gracias al diseño basado en **Clean Architecture**, todo el núcleo de lógica de negocio (Dominio), los casos de uso (Aplicación) y el motor relacional (SQLite en Infraestructura) se mantienen intactos y desacoplados de las interfaces de usuario.
 
-### Diseño e implementación del esquema de base de datos
+---
 
-- [ ] Copiar en `04-sqlite` el estado base de `03-testing` (o crear rama específica para la fase 04).
-- [ ] Diseñar las tablas SQL mapeando cada entidad de dominio a tablas con sus columnas, tipos y restricciones (`PRIMARY KEY`, `NOT NULL`, `FOREIGN KEY`).
-- [ ] Usar nombres de columnas en snake_case.
+## 🛠️ Tecnologías Utilizadas
+- **Python 3.8+**
+- **Flask 3.0.3** (Nueva capa de presentación de la API)
+- **SQLite3** (Motor de persistencia permanente)
+- **Unittest** (Batería de pruebas automatizadas del dominio)
 
-### Script de inicialización de base de datos
+---
 
-- [ ] Crear script que cree el esquema de la BD e inserte datos iniciales de prueba
-  - Debe poder ejecutarse varias veces sin error
-  - Crea todas las tablas respetando dependencias de claves foráneas
-  - Inserta datos iniciales para probar la aplicación
+## 🚀 Requisitos e Instalación
 
-### Excepciones de dominio para persistencia
+Para desplegar y probar la aplicación web, ejecuta los siguientes comandos desde la raíz de la carpeta `05-flask-01`:
 
-- [ ] (*opcional*) Crear fichero de excepciones (`infrastructure/errores.py`) con las excepciones que el repositorio SQLite lanza al usuario
-  - Clase base para todas las excepciones de persistencia
-  - Excepciones por cada tipo de error que puede ocurrir (duplicado, no encontrado, etc.)
+1. **Instalar dependencias necesarias (Flask y Werkzeug):**
+   ```bash
+   pip install -r requirements.txt
+Inicializar la base de datos física y los catálogos maestros:
 
-### Implementación del repositorio SQLite
+Bash
+python crear_bd.py
+💻 Modos de Ejecución Disponibles
+Modo 1: Servidor Web (API Flask)
+Para levantar el servidor web dinámico, ejecuta la aplicación como un módulo:
 
-- [ ] Crear clase(s) de repositorio que implementen persistencia en SQLite (realizando las mismas operaciones que el repositorio en memoria: guardar, obtener, actualizar, eliminar, etc.)
-- [ ] Usar consultas SQL parametrizadas (parámetros `?`) para prevenir inyección SQL
-- [ ] Capturar excepciones SQLite (`sqlite3.IntegrityError`, `sqlite3.OperationalError`, etc.) y transformarlas en excepciones de dominio
-- [ ] Activar `PRAGMA foreign_keys = ON` al conectar para garantizar integridad referencial
-- [ ] **El flujo principal de la aplicación (menú) debe usar SOLO el repositorio SQLite para persistencia** (no usar en memoria)
+Bash
+python -m presentation.app
+El servidor estará escuchando peticiones en: http://127.0.0.1:5000/
 
-### Repositorio en memoria (referencia, no en uso)
+Modo 2: Interfaz de Consola Clásica
+El menú interactivo por terminal sigue estando operativo al 100%. Para usarlo, abre otra terminal y ejecuta:
 
-- [ ] (**opcional**) Mantener el código del repositorio en memoria como referencia de implementación y contrato
-- [ ] (**opcional**) Modificar `infrastructure/repositorio_memoria.py` para lanzar las **mismas excepciones de dominio** que el repositorio SQLite (útil para tests sin persistencia)
+Bash
+python main.py
+🛣️ Mapeo de Rutas de la API Web
+Las operaciones del dominio se exponen a través de los siguientes segmentos de URL dinámicos:
 
-### Integración con SQLite en la capa de presentación
+Gestión de Incidencias
+GET /incidencias → Devuelve el listado completo de incidencias.
 
-- [ ] Modificar la capa de presentación para cargar datos iniciales desde la BD en lugar de desde memoria (al iniciar la aplicación)
-- [ ] Capturar excepciones de dominio, no excepciones de `sqlite3`
-- [ ] (*opcional*) Mostrar mensajes amigables al usuario cuando ocurran errores de persistencia
-- [ ] No hacer imports de `sqlite3` directamente en la presentación.
+GET /incidencias/<int:id_inc> → Detalle específico de una incidencia (404 si no existe).
 
-### Actualización de los tests
+GET /incidencias/nueva/<id_inc>/<id_tecnico>/<id_sala>/<descripcion> → Registra una nueva incidencia y redirige al listado general (409 si el ID ya existe, 400 si faltan datos).
 
-- [ ] *(opcional)* Actualizar tests existentes para esperar excepciones de dominio en lugar de excepciones genéricas de Python
-- [ ] Verificar que `python -m unittest` pasa con todos los tests en verde
-- [ ] *(opcional)* Crear tests específicos para el repositorio SQLite
+GET /incidencias/<id_inc>/resolver/<resolucion> → Solventar y cerrar una incidencia (409 si ya estaba resuelta).
 
-### Documentación
+GET /incidencias/<id_inc>/documento → Genera el acta PDF final (solo si está resuelta, 400 si está pendiente).
 
-- [ ] Actualizar `CHANGELOG.md` (versión `0.4.0`) con los cambios principales
-- [ ] Actualizar `README.md` con instrucciones de cómo ejecutar el script de inicialización
-- [ ] Documentar el diseño de la BD en `docs/DISEÑO_BD.md`:
-- [ ] (*opcional*) Documentar el contrato de excepciones en `docs/CONTRATO_EXCEPCIONES.md`:
+GET /incidencias/<id_inc>/relevo/<id_tecnico_entrante> → Genera borrador y notifica al técnico entrante.
 
-### Verificación final
+Catálogos y Buzones (Auxiliares)
+GET /tecnicos → Listado de personal técnico disponible.
 
-- [ ] La aplicación funciona igual desde el punto de vista del usuario (mismo menú, mismas operaciones)
-- [ ] Los datos persisten entre ejecuciones (cierra y reabre la app, verifica que los datos están)
-- [ ] Los tests pasan todos sin cambios de lógica de dominio
+GET /tecnicos/<int:id_tecnico>/avisos → Consulta del buzón de avisos de relevo de un técnico.
 
-</details>
+GET /salas → Listado de infraestructuras monitorizadas.
+
+📂 Documentación del Proyecto
+El desglose técnico detallado de esta fase se encuentra en los siguientes manuales de la carpeta docs/:
+
+Ejecución del Sistema (docs/EJECUCION.md): Guía de despliegue paso a paso y batería de URLs de prueba HTTP.
+
+Arquitectura de Capas (docs/ARQUITECTURA_POR_CAPAS.md): Diagrama del flujo de dependencias e integración limpia de Flask.
+
+Contrato del Repositorio (docs/CONTRATO_REPOSITORIO.md): Gestión del almacenamiento y traducción de excepciones.
