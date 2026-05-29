@@ -3,7 +3,6 @@ from domain.estructura import RegistroIncidencia
 class ServiciosIncidencias:
     def __init__(self, repositorio):
         """
-        Aquí conectamos el servicio con el "almacén" (repositorio).
         Le pasamos el almacén para que sepa dónde guardar las cosas.
         """
         self.repo = repositorio
