@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block title %}Listado de Incidencias{% endblock %}
+
+{% block content %}
+<h2>📋 Historial Técnico de Incidencias</h2>
+<p>Registros validados en el motor SQLite actualizados en tiempo real:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Estado</th>
+            <th>Sala de Control</th>
+            <th>Técnico Responsable</th>
+            <th>Descripción del Suceso</th>
+            <th>Resolución Aplicada</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for inc in lista_incidencias %}
+        <tr>
+            <td><strong>#{{ inc.id_inc }}</strong></td>
+            <td>
+                <span class="badge {% if inc.estado == 'Borrador' %}badge-abierta{% else %}badge-solventada{% endif %}">
+                    {{ inc.estado }}
+                </span>
+            </td>
+            <td>{{ inc.sala.nombre }}</td>
+            <td>{{ inc.tecnico.nombre }}</td>
+            <td>{{ inc.descripcion }}</td>
+            <td>
+                {% if inc.resolucion %}
+                    <span style="color: #15803d;">{{ inc.resolucion }}</span>
+                {% else %}
+                    <span style="color: #94a3b8; font-style: italic;">Pendiente de cierre</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% else %}
+        <tr>
+            <td colspan="6" style="text-align: center; color: #64748b; padding: 2rem;">
+                No hay incidencias registradas en la base de datos relacional.
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

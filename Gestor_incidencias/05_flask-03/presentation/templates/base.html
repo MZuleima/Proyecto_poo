@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestor de Incidencias Técnico{% endblock %}</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; margin: 0; padding: 0; background-color: #f4f6f9; color: #333; }
+        header { background-color: #1e293b; color: white; padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        header h1 { margin: 0; font-size: 1.5rem; }
+        nav a { color: #94a3b8; text-decoration: none; margin-left: 1.5rem; font-weight: 500; transition: color 0.3s; }
+        nav a:hover { color: white; }
+        main { padding: 2rem; max-width: 1200px; margin: 0 auto; }
+        .container { background: white; padding: 2rem; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        footer { text-align: center; padding: 1.5rem; color: #64748b; font-size: 0.875rem; margin-top: 2rem; border-top: 1px solid #e2e8f0; }
+        table { width: 100%; border-collapse: collapse; margin-top: 1rem; }
+        th, td { padding: 0.75rem 1rem; text-align: left; border-bottom: 1px solid #e2e8f0; }
+        th { background-color: #f8fafc; color: #475569; font-weight: 600; }
+        tr:hover { background-color: #f1f5f9; }
+        .badge { padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase; }
+        .badge-abierta { background-color: #fee2e2; color: #991b1b; }
+        .badge-solventada { background-color: #dcfce7; color: #166534; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>🛠️ Centro de Control de Incidencias</h1>
+        <nav>
+            <a href="{{ url_for('bienvenida') }}">Inicio</a>
+            <a href="{{ url_for('listar_incidencias') }}">Incidencias</a>
+            <a href="{{ url_for('listar_tecnicos_web') }}">Técnicos</a>
+            <a href="{{ url_for('listar_salas_web') }}">Salas</a>
+            <a href="{{ url_for('mostrar_ayuda') }}">Ayuda</a>
+        </nav>
+    </header>
+
+    <main>
+        <div class="container">
+            {% block content %}{% endblock %}
+        </div>
+    </main>
+
+    <footer>
+        <p>&copy; 2026 - Sistema de Monitorización Crítica | Arquitectura de Capas Limpia</p>
+    </footer>
+
+</body>
+</html>
