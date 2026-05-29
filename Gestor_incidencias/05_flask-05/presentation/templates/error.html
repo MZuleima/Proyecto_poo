@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block title %}Error {{ codigo }} - Gestor de Incidencias{% endblock %}
+
+{% block content %}
+<div style="padding: 2rem; border-radius: 6px; 
+            background-color: {{ '#fcf8e3' if codigo == 404 else '#f2dede' }}; 
+            color: {{ '#8a6d3b' if codigo == 404 else '#a94442' }}; 
+            border: 1px solid {{ '#faebcc' if codigo == 404 else '#ebccd1' }};">
+    
+    <h2>{{ titulo }}</h2>
+    <p>{{ descripcion }}</p>
+    
+    {% if codigo == 500 %}
+    <p style="font-size: 0.9rem; font-style: italic; margin-top: 1rem; color: #7f1d1d;">
+        * La traza completa del sistema ha sido registrada de forma segura en el archivo de auditoría del servidor.
+    </p>
+    {% endif %}
+    
+    <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid rgba(0,0,0,0.1);">
+    
+    <p>
+        <a href="{{ url_for('bienvenida') }}" style="color: #1e293b; font-weight: bold; text-decoration: underline;">
+            Regresar al Índice Principal
+        </a>
+    </p>
+</div>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Registrar Incidencia - Centro de Control{% endblock %}
+
+{% block content %}
+<h2>📝 Registrar Nueva Incidencia Crítica</h2>
+<p>Complete los datos del suceso técnico. El registro se consolidará en el motor relacional SQLite.</p>
+
+{% if error %}
+<div style="background-color: #fee2e2; border: 1px solid #f87171; color: #991b1b; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
+    <strong>⚠️ Error de Validación:</strong> {{ error }}
+</div>
+{% endif %}
+
+<form method="POST" action="{{ url_for('crear_incidencia_web') }}" style="max-width: 600px; display: flex; flex-direction: column; gap: 1.2rem;">
+    
+    <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 0.4rem;">Código de Incidencia (ID Numérico):</label>
+        <input type="number" name="id_inc" value="{{ valores.id_inc or '' }}" required 
+               style="width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+    </div>
+
+    <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 0.4rem;">Técnico de Guardia Asignado:</label>
+        <select name="id_tecnico" required style="width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+            <option value="">-- Seleccione un técnico --</option>
+            {% for t in tecnicos %}
+                <option value="{{ t.id_empleado }}" {% if valores.id_tecnico|string == t.id_empleado|string %}selected{% endif %}>
+                    {{ t.nombre }} (Turno: {{ t.turno }})
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 0.4rem;">Sala de Control Afectada:</label>
+        <select name="id_sala" required style="width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 4px;">
+            <option value="">-- Seleccione una infraestructura --</option>
+            {% for s in salas %}
+                <option value="{{ s.id_empleado }}" {% if valores.id_sala|string == s.id_empleado|string %}selected{% endif %}>
+                    {{ s.nombre }} (Sector: {{ s.ubicacion }})
+                </option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 0.4rem;">Descripción del Fallo / Alerta:</label>
+        <textarea name="descripcion" rows="4" required 
+                  style="width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 4px; font-family: sans-serif;">{{ valores.descripcion or '' }}</textarea>
+    </div>
+
+    <div style="margin-top: 0.5rem;">
+        <button type="submit" style="background-color: #1e293b; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+            Consolidar Registro
+        </button>
+        <a href="{{ url_for('listar_incidencias') }}" style="margin-left: 1rem; color: #64748b; text-decoration: none;">Cancelar</a>
+    </div>
+</form>
+{% endblock %}

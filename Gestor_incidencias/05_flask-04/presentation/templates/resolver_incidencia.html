@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}Resolver Incidencia #{{ inc.id_inc }}{% endblock %}
+
+{% block content %}
+<h2>🔒 Resolver e Indexar Incidencia #{{ inc.id_inc }}</h2>
+<p>Se va a proceder al cierre operativo del reporte técnico asignado a la infraestructura <strong>{{ inc.sala.nombre }}</strong>.</p>
+
+<div style="background: #f8fafc; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem; border-left: 4px solid #cbd5e1;">
+    <strong>Descripción original:</strong> {{ inc.descripcion }} <br>
+    <strong>Operador:</strong> {{ inc.tecnico.nombre }}
+</div>
+
+{% if error %}
+<div style="background-color: #fee2e2; border: 1px solid #f87171; color: #991b1b; padding: 1rem; border-radius: 6px; margin-bottom: 1.5rem;">
+    <strong>⚠️ Error del Sistema:</strong> {{ error }}
+</div>
+{% endif %}
+
+<form method="POST" action="{{ url_for('resolver_incidencia_web', id_inc=inc.id_inc) }}" style="max-width: 600px; display: flex; flex-direction: column; gap: 1.2rem;">
+    
+    <div>
+        <label style="display: block; font-weight: 600; margin-bottom: 0.4rem;">Acciones de Resolución Aplicadas:</label>
+        <textarea name="resolucion" rows="4" required placeholder="Detalle las contramedidas de ingeniería tomadas..."
+                  style="width: 100%; padding: 0.6rem; border: 1px solid #cbd5e1; border-radius: 4px; font-family: sans-serif;">{{ valores.resolucion or '' }}</textarea>
+    </div>
+
+    <div>
+        <button type="submit" style="background-color: #10b981; color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 4px; font-weight: bold; cursor: pointer;">
+            Firmar y Solventar Acta
+        </button>
+        <a href="{{ url_for('listar_incidencias') }}" style="margin-left: 1rem; color: #64748b; text-decoration: none;">Volver</a>
+    </div>
+</form>
+{% endblock %}

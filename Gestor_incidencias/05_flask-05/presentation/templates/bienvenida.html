@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+
+{% block title %}Inicio - Gestor de Incidencias{% endblock %}
+
+{% block content %}
+<h2>Bienvenido al panel del Sistema de Control Crítico</h2>
+<p>Utiliza el menú de navegación superior para auditar y controlar el estado de las infraestructuras de guardia en tiempo real.</p>
+
+<div style="margin-top: 2rem; display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 6px; border-left: 4px solid #3b82f6;">
+        <h3>🛠️ Diagnóstico del Servidor</h3>
+        <ul>
+            <li><a href="{{ url_for('mostrar_ayuda') }}">Ver Mapa de Rutas (/ayuda)</a></li>
+        </ul>
+    </div>
+    <div style="background: #f8fafc; padding: 1.5rem; border-radius: 6px; border-left: 4px solid #10b981;">
+        <h3>📋 Datos de Producción</h3>
+        <p>Los entornos de consola clásica y la API web comparten de manera concurrente el archivo relacional SQLite <code>incidencias.db</code>.</p>
+    </div>
+</div>
+{% endblock %}

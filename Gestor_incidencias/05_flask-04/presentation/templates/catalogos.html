@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block title %}Catálogo Maestro{% endblock %}
+
+{% block content %}
+<h2>📁 {{ titulo_seccion }}</h2>
+<p>Registros maestros validados en el sistema relacional:</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Identificador Único</th>
+            <th>Nombre / Atributo</th>
+            <th>Información Operativa</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for elemento in elementos %}
+        <tr>
+            <td><code>ID: {{ elemento.id_empleado }}</code></td>
+            <td><strong>{{ elemento.nombre }}</strong></td>
+            <td>
+                {% if elemento.turno %}
+                    Turno: <span style="text-transform: capitalize;">{{ elemento.turno }}</span>
+                {% else %}
+                    Ubicación: <span>{{ elemento.ubicacion }}</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

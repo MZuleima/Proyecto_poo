@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block title %}Diccionario de la API{% endblock %}
+
+{% block content %}
+<h2>🗺️ Diccionario Auto-Actualizado de la API Web</h2>
+<p>Listado de endpoints activos e inspeccionados en el servidor en tiempo real (excluyendo estáticos):</p>
+
+<table>
+    <thead>
+        <tr style="background-color: #f1f5f9;">
+            <th>Ruta Registrada en Flask</th>
+            <th>Métodos HTTP Aceptados</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for regla in mapa_rutas %}
+        <tr>
+            <td><strong style="color: #0f172a; font-family: monospace;">{{ regla.rule }}</strong></td>
+            <td>
+                {% for metodo in regla.methods %}
+                    <span style="background: #e2e8f0; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.8rem; font-weight: bold; margin-right: 0.2rem;">
+                        {{ metodo }}
+                    </span>
+                {% endfor %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
