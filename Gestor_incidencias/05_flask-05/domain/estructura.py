@@ -60,6 +60,10 @@ class RegistroIncidencia:
     @property
     def fecha_cierre(self):
         return self._fecha_cierre
+    
+    @fecha_cierre.setter
+    def fecha_cierre(self, valor):
+        self._fecha_cierre = valor
 
     @estado.setter
     def estado(self, nuevo_estado):
@@ -70,8 +74,12 @@ class RegistroIncidencia:
 
     @resolucion.setter
     def resolucion(self, texto):
-        if not texto or len(texto.strip()) < 5:
-            raise ValueError("La resolución es demasiado corta (mínimo 5 caracteres).")
+        if not texto or texto.strip() == "":
+            self._resolucion = "" 
+            return
+            
+        if len(texto.strip()) < 5:
+            raise ValueError("La resolución debe tener al menos 5 caracteres.")
         self._resolucion = texto
 
     def solventar(self, texto_resolucion):

@@ -45,14 +45,16 @@ class ServiciosIncidencias:
         return self.repo.obtener_todas()
 
     def resolver(self, incidencia, resolucion):
-        """
-        Caso de Uso: Transiciona el estado de una incidencia a Solventada.
-        """
-        if incidencia.estado != "Pendiente":
-            raise ValueError("La incidencia ya está resuelta")
-            
-        incidencia.solventar(resolucion)
-        self.repo.guardar(incidencia)
+            """
+            Caso de Uso: Transiciona el estado de una incidencia a Solventada.
+            """
+            if incidencia.estado == "Solventada": 
+                raise ValueError("La incidencia ya ha sido cerrada.")
+            if incidencia.estado != "Borrador":
+                raise ValueError(f"No se puede resolver una incidencia en estado {incidencia.estado}")
+                
+            incidencia.solventar(resolucion)
+            self.repo.guardar(incidencia)
 
     def generar_documento(self, obj_incidencia, tecnico_entrante=None):
         """Caso de Uso: Generación de actas de cierre o derivación de borradores."""
