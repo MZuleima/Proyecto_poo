@@ -63,4 +63,23 @@
 ### Añadido
 - **Persistencia Real**: Nueva clase `RepositorioSQLite` en la capa de infraestructura para sustituir el almacenamiento volátil en memoria.
 - **Script de Inicialización**: Archivo `crear_bd.py` para la creación automatizada de tablas relacionales (`tecnicos`, `salas`, `incidencias`) e inserción de datos semilla (*seeds*).
-- **Desacoplamiento de Errores**: Archivo `domain/excepciones.py` con las clases `ErrorPersistencia` y `RegistroNoEncontrado` para evitar la propagación de excepciones del
+- **Desacoplamiento de Errores**: Archivo `domain/excepciones.py` con las clases `ErrorPersistencia` y `RegistroNoEncontrado` para evitar la propagación de excepciones
+
+[0.10.0] - Fase IX: API REST y Gestión de Sesiones Seguras
+Añadido
+API REST (JSON): Implementación de endpoints de lectura (/api/incidencias y /api/incidencias/<id>) para el consumo programático de datos, utilizando serialización directa mediante métodos to_dict() en las entidades del dominio.
+
+Sistema de Mensajes Flash: Integración de notificaciones transitorias de sesión (exito, info, error) mediante flash(), permitiendo un feedback dinámico y no intrusivo para el usuario.
+
+Gestión de Sesiones: Configuración de app.secret_key para la firma y encriptación de cookies de sesión, requisito técnico indispensable para la persistencia temporal de los mensajes flash.
+
+Sincronización de Rutas: Implementación de lógica en app.py y base.html para asegurar la consistencia del enrutamiento, eliminando errores BuildError mediante la eliminación de llamadas obsoletas y la actualización del mapa de rutas.
+
+Modificado
+presentation/app.py: Refactorización integral para incluir el soporte de jsonify y flash, además de la unificación de los manejadores de error.
+
+presentation/templates/base.html: Inclusión del colector e iterador de mensajes flash en el layout principal para garantizar que las alertas aparezcan en todas las vistas.
+
+presentation/templates/incidencias.html: Limpieza profunda del código HTML para eliminar formularios de acciones (derivar_relevo_post) que no contaban con soporte en el backend, optimizando la interfaz y la estabilidad.
+
+Documentación del proyecto: Actualización de README.md incluyendo la nueva sección de API REST y guía de consumo mediante cURL.
