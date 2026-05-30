@@ -22,7 +22,7 @@
             <th>Técnico Responsable</th>
             <th>Descripción del Suceso</th>
             <th>Resolución Aplicada</th>
-            <th style="text-align: center;">Acciones Operativas (POST/GET)</th>
+            <th style="text-align: center;">Acciones Operativas</th>
         </tr>
     </thead>
     <tbody>
@@ -49,14 +49,8 @@
                     {% if inc.estado == 'Borrador' %}
                         <a href="{{ url_for('resolver_incidencia_web', id_inc=inc.id_inc) }}" 
                            style="background-color: #10b981; color: white; padding: 0.3rem 0.6rem; border-radius: 4px; text-decoration: none; font-size: 0.8rem; font-weight: bold;">
-                            Resolver
+                           Resolver
                         </a>
-                        
-                        <form method="POST" action="{{ url_for('derivar_relevo_post', id_inc=inc.id_inc, id_tecnico_entrante=2) }}" style="margin: 0;">
-                            <button type="submit" style="background-color: #f59e0b; color: white; padding: 0.3rem 0.6rem; border: none; border-radius: 4px; font-size: 0.8rem; font-weight: bold; cursor: pointer;">
-                                Relevo T2
-                            </button>
-                        </form>
                     {% else %}
                         <form method="POST" action="{{ url_for('obtener_documento_post', id_inc=inc.id_inc) }}" style="margin: 0;">
                             <button type="submit" style="background-color: #3b82f6; color: white; padding: 0.3rem 0.6rem; border: none; border-radius: 4px; font-size: 0.8rem; font-weight: bold; cursor: pointer;">
